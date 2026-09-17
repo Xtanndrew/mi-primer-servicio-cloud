@@ -37,13 +37,13 @@ export default async () => {
     } catch (error) {
 
         console.error(
-            "Error al consultar Google Sheets:",
+            "Error al consultar Google Sheets!:",
             error
         );
 
         return Response.json(
             {
-                error: "No fue posible consultar Google Sheets"
+                error: "No fue posible consultar Google Sheets!"
             },
             {
                 status: 500
