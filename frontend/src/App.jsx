@@ -8,7 +8,7 @@ function App() {
 
     useEffect(() => {
 
-        fetch("http://localhost:3000/api/productos")
+        fetch("/.netlify/functions/productos")
 
             .then((response) => {
 
