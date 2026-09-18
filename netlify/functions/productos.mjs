@@ -37,6 +37,7 @@ export default async () => {
 
     } catch (error) {
 
+        //comentarios
         console.error(
             "Error al consultar Google Sheets!:",
             error
