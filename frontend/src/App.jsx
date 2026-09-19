@@ -22,7 +22,7 @@ function App() {
 
             .then((data) => {
 
-                setProductos(data);
+                setProductos(data.productos);
                 setCargando(false);
 
             })
