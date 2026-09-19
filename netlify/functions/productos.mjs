@@ -2,35 +2,14 @@ import { google } from "googleapis";
 
 export default async () => {
 
-    try {
+    const key = process.env.GOOGLE_PRIVATE_KEY || "";
 
-        const privateKey = process.env.GOOGLE_PRIVATE_KEY
-            ?.replace(/\\n/g, "\n");
-
-        const auth = new google.auth.JWT(
-            process.env.GOOGLE_CLIENT_EMAIL,
-            null,
-            privateKey,
-            [
-                "https://www.googleapis.com/auth/spreadsheets.readonly"
-            ]
-        );
-
-        // Intentar autenticarnos contra Google
-        const credentials = await auth.authorize();
-
-        return Response.json({
-            autenticacion: "OK",
-            cliente: process.env.GOOGLE_CLIENT_EMAIL,
-            tokenGenerado: !!credentials.access_token
-        });
-
-    } catch (error) {
-
-        return Response.json({
-            autenticacion: "ERROR",
-            mensaje: error.message,
-            codigo: error.code || null
-        });
-    }
+    return Response.json({
+        existe: !!key,
+        longitud: key.length,
+        inicio: key.substring(0, 30),
+        tieneBEGIN: key.includes("-----BEGIN PRIVATE KEY-----"),
+        tieneEND: key.includes("-----END PRIVATE KEY-----"),
+        tieneSaltos: key.includes("\\n")
+    });
 };
