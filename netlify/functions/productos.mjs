@@ -15,20 +15,36 @@ export default async () => {
             ]
         });
 
-        const credentials = await auth.authorize();
+        const sheets = google.sheets({
+            version: "v4",
+            auth
+        });
+
+        const result = await sheets.spreadsheets.values.get({
+            spreadsheetId: process.env.GOOGLE_SHEET_ID,
+            range: "Productos!A2:D"
+        });
+
+        const rows = result.data.values || [];
+
+        const productos = rows.map((row) => ({
+            id: row[0] || "",
+            nombre: row[1] || "",
+            precio: Number(row[2] || 0),
+            categoria: row[3] || ""
+        }));
 
         return Response.json({
-            autenticacion: "OK",
-            tokenGenerado: !!credentials.access_token,
-            cliente: process.env.GOOGLE_CLIENT_EMAIL
+            conexion: "OK",
+            productos: productos
         });
 
     } catch (error) {
 
-        console.error("ERROR AUTH GOOGLE:", error);
+        console.error("ERROR GOOGLE SHEETS:", error);
 
         return Response.json({
-            autenticacion: "ERROR",
+            conexion: "ERROR",
             mensaje: error.message,
             codigo: error.code || null
         });
