@@ -45,7 +45,8 @@ export default async () => {
 
         return Response.json(
             {
-                error: "No fue posible consultar Google Sheets!"
+                error: "No fue posible consultar Google Sheets!",
+                detalle: error.message
             },
             {
                 status: 500
