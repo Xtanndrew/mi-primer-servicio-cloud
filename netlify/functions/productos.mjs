@@ -32,7 +32,7 @@ export default async () => {
             precio: Number(row[2] || 0),
             categoria: row[3] || ""
         }));
-
+// camnbios para actualizar
         return Response.json(productos);
 
     } catch (error) {
